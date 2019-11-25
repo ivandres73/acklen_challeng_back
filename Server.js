@@ -1,7 +1,7 @@
 const express = require('express'); 
 const User = require('./User');  
 const app = express();
-const PORT = 3001;
+const PORT = 80;
 
 app.get('/', (req, res) => {
   res.send({ message: 'endpoint working' });
