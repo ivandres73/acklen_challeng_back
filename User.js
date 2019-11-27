@@ -51,4 +51,19 @@ User.createUser = async (req, res) => {
   }
 };
 
+User.logIn = async (req, res) => {
+  const user = await User.findOne({where: {username: req.body.username}});
+  if (user == null)
+    return res.send({ message: 'user doesnt exist' });
+  try {
+    if (user.password != req.body.password)
+      return res.send({ message: 'password is incorrect' });
+    res.status(201).json({
+      login: 'OK'
+    });
+  } catch(error) {
+    res.send(error);
+  }
+};
+
 module.exports = User;

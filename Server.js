@@ -22,8 +22,9 @@ app.get('/', (req, res) => {
 
 //USER ROUTES
 app.get('/users', User.readAll);
-app.post('/user', User.createUser);
 app.get('/user/:username', User.readOne);
+app.post('/user', User.createUser);
+app.post('/login', User.logIn);
 
 app.listen(PORT, () => {
   console.log(`Server running at: http://localhost:${PORT}/`);
