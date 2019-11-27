@@ -4,8 +4,8 @@ const database = require('./Database');
 const User = database.define(
   'users',
   {
-    user_id: { type: Sequelize.INTEGER, primaryKey: true},
-    username: Sequelize.STRING,
+    //user_id: { type: Sequelize.INTEGER, primaryKey: true, defaultValue: '', allowNull: false},
+    username: { type: Sequelize.STRING, primaryKey: true, allowNull: false},
     password: Sequelize.STRING
   },
   { timestamps: false }
@@ -24,25 +24,31 @@ User.readOne = async (req, res) => {
   const username = req.params.username;
   try {
     const user = await User.findOne({where: {username: username}});
-    if (user == null) res.send({ message: 'user doesnt exit'});
+    if (user == null)
+      return res.status(404).send({ message: 'user doesnt exit' });
     res.send(user);
   } catch (error) {
     res.send(error);
   }
 };
 
-/*User.createUser = async (req, res) => {
+User.createUser = async (req, res) => {
+  console.log(req.body.username);
+  console.log(req.body.password);
+  const user = await User.findOne({where: {username: req.body.username}});
+  if (user != null)
+    return res.send({ message: 'user already exist' });
   try {
     const user = await User.create({
-      username = req.body.username,
-      password = req.body.password
-    })
+      username : req.body.username,
+      password : req.body.password
+    });
     res.status(201).json({
       createdUser: user
     });
-  } catch(e) {
-    return res.send(error);
+  } catch(error) {
+    res.send(error);
   }
-};*/
+};
 
 module.exports = User;

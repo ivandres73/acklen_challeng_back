@@ -22,7 +22,7 @@ app.get('/', (req, res) => {
 
 //USER ROUTES
 app.get('/users', User.readAll);
-app.post('/user/:usernmae, ', User.create);
+app.post('/user', User.createUser);
 app.get('/user/:username', User.readOne);
 
 app.listen(PORT, () => {
