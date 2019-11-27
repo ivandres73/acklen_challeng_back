@@ -25,7 +25,7 @@ User.readOne = async (req, res) => {
   try {
     const user = await User.findOne({where: {username: username}});
     if (user == null)
-      return res.status(404).send({ message: 'user doesnt exit' });
+      return res.send({ message: 'user doesnt exit' });
     res.send(user);
   } catch (error) {
     res.send(error);
@@ -33,12 +33,11 @@ User.readOne = async (req, res) => {
 };
 
 User.createUser = async (req, res) => {
-  console.log(req.body.username);
-  console.log(req.body.password);
-  const user = await User.findOne({where: {username: req.body.username}});
-  if (user != null)
-    return res.send({ message: 'user already exist' });
+  console.log(req.body);
   try {
+    const exist_user = await User.findOne({where: {username: req.body.username}});
+    if (exist_user != null)
+      return res.send({ message: 'user already exist' });
     const user = await User.create({
       username : req.body.username,
       password : req.body.password
@@ -52,15 +51,13 @@ User.createUser = async (req, res) => {
 };
 
 User.logIn = async (req, res) => {
-  const user = await User.findOne({where: {username: req.body.username}});
-  if (user == null)
-    return res.send({ message: 'user doesnt exist' });
+  console.log(req.body);
   try {
+    console.log('1 ', req.body.username);
+    const user = await User.findOne({where: {username: req.body.username}});
     if (user.password != req.body.password)
-      return res.send({ message: 'password is incorrect' });
-    res.status(201).json({
-      login: 'OK'
-    });
+      return res.send({ message: 'invalid password'});
+    res.send(user);
   } catch(error) {
     res.send(error);
   }

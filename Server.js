@@ -15,6 +15,7 @@ app.use((req, res, next) => {
 })
 
 app.use(express.json()); //Used to parse JSON bodies instead of body-parser
+//app.use(express.urlencoded());
 
 app.get('/', (req, res) => {
   res.send({ message: 'endpoint working' });
