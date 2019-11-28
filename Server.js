@@ -1,6 +1,8 @@
 const express = require('express');
 const User = require('./User');
-const Head = require('./Head')
+const Head = require('./Head');
+const Body = require('./Body');
+const Legs = require('./Legs');
 const app = express();
 const PORT = 80;
 
@@ -16,7 +18,6 @@ app.use((req, res, next) => {
 })
 
 app.use(express.json()); //Used to parse JSON bodies instead of body-parser
-//app.use(express.urlencoded());
 
 app.get('/', (req, res) => {
   res.send({ message: 'endpoint working' });
@@ -32,6 +33,16 @@ app.post('/login', User.logIn);
 app.get('/heads', Head.readAll);
 app.get('/head/next', Head.getNextImgUrl);
 app.get('/head/back', Head.getPrevImgUrl);
+
+//BODY ROUTES
+app.get('/bodies', Body.readAll);
+app.get('/body/next', Body.getNextImgUrl);
+app.get('/body/back', Body.getPrevImgUrl);
+
+//LEGS ROUTES
+app.get('/legs', Legs.readAll);
+app.get('/legs/next', Legs.getNextImgUrl);
+app.get('/legs/back', Legs.getPrevImgUrl);
 
 app.listen(PORT, () => {
   console.log(`Server running at: http://localhost:${PORT}/`);

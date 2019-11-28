@@ -24,7 +24,7 @@ Head.readAll = async (req, res) => {
 };
 
 Head.getNextImgUrl = async (req, res) => {
-  if (count >= 7)
+  if (count > 6)
     count = 1;
   try {
     const head = await Head.findOne({where: {head_id: count++}});;
@@ -38,7 +38,7 @@ Head.getNextImgUrl = async (req, res) => {
 
 Head.getPrevImgUrl = async (req, res) => {
   count -= 2;
-  if (count <= 0)
+  if (count < 1)
     count = 6;
   try {
     const head = await Head.findOne({where: {head_id: count++}});;
@@ -49,3 +49,5 @@ Head.getPrevImgUrl = async (req, res) => {
     res.send(error);
   }
 };
+
+module.exports = Head;
