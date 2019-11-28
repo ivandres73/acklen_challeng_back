@@ -1,5 +1,6 @@
-const express = require('express'); 
-const User = require('./User');  
+const express = require('express');
+const User = require('./User');
+const Head = require('./Head')
 const app = express();
 const PORT = 80;
 
@@ -26,6 +27,11 @@ app.get('/users', User.readAll);
 app.get('/user/:username', User.readOne);
 app.post('/user', User.createUser);
 app.post('/login', User.logIn);
+
+//HEAD ROUTES
+app.get('/heads', Head.readAll);
+app.get('/head/next', Head.getNextImgUrl);
+app.get('/head/back', Head.getPrevImgUrl);
 
 app.listen(PORT, () => {
   console.log(`Server running at: http://localhost:${PORT}/`);
